@@ -1,15 +1,19 @@
-package cpm;
+
+
 
 public class Process {
 
 	private int ProcessID, BurstTime, Memory;
 	private int arrivalTime, turnAround, waitTime, terminationTime;
+	int BurstTimer;
 	private States state;
 
 	public Process(int processId, int burstTime, int memoryRequired) {
 		this.ProcessID = processId;
 		this.Memory = memoryRequired;
 		this.BurstTime = burstTime;
+		this.BurstTimer=burstTime;
+
 
 		this.state = States.Waiting;
 	}
@@ -28,6 +32,15 @@ public class Process {
 
 	public void setBurstTime(int burstTime) {
 		BurstTime = burstTime;
+	}
+	
+	
+	public int getBurstTimer() {
+		return BurstTimer;
+	}
+
+	public void setBurstTimer(int burstTimer) {
+		BurstTimer = burstTimer;
 	}
 
 	public int getMemory() {

@@ -1,5 +1,3 @@
-package cpm;
-
 import java.util.ArrayList;
 
 public class FCFS extends Algorithm {
@@ -15,19 +13,10 @@ public class FCFS extends Algorithm {
 
 			if (!readyQueue.isEmpty())
 				fcfs(readyQueue);
-			else {
-				try {
-					Main.Thread2.join(10);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-			}
-
+		
 		} while (!JobScheduler.jobQueue.isEmpty() || !CPUScheduler.readyQueue.isEmpty());
 
-		// At each loop it will wait for 10ms for Thread2 in case ready queue load more
-		// processes from the job queue
+		
 
 		loadResults();
 
@@ -38,7 +27,8 @@ public class FCFS extends Algorithm {
 
 		while (!readyQueue.isEmpty()) {
 			Process p = readyQueue.remove(0);
-
+			 CPUScheduler.changeProcessState(p, States.Running);
+		     
 			Time += p.getBurstTime();
 			p.setTurnAround(Time - p.getArrivalTime());
 			p.setWaitTime((p.getTurnAround() - p.getBurstTime()) + p.getWaitTime());
@@ -49,9 +39,15 @@ public class FCFS extends Algorithm {
 			finalQueue.add(p);
 			p.setState(States.Terminated);
 
-			System.out.println("Process " + p.getProcessID() + " State: " + p.getState() + " Terminated at: "
+			System.out.println("Process " + p.getProcessID() + " State: " + p.getState() + "\nTerminated at Time: "
 					+ p.getTerminationTime());
 			Memory.releaseMemory(p.getMemory());
+			try {
+				Main.Thread2.join(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println("--------------------------------------------------------------------------");
 
 		}
 

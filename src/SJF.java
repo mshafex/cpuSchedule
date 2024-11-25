@@ -1,5 +1,3 @@
-package cpm;
-
 import java.util.ArrayList;
 
 public class SJF extends Algorithm {
@@ -18,17 +16,6 @@ public class SJF extends Algorithm {
 				sjf(readyQueue);
 			}
 
-			else {
-
-				try {
-					Main.Thread2.join(10);
-					readyQueue.sort((p1, p2) -> p1.getBurstTime() - p2.getBurstTime());
-				} catch (InterruptedException e) {
-
-					e.printStackTrace();
-				}
-
-			}
 		} while (!JobScheduler.jobQueue.isEmpty() || !CPUScheduler.readyQueue.isEmpty());
 		loadResults();
 	}
@@ -36,6 +23,7 @@ public class SJF extends Algorithm {
 	public static void sjf(ArrayList<Process> readyQueue) {
 		while (!readyQueue.isEmpty()) {
 			Process p = readyQueue.remove(0);
+			CPUScheduler.changeProcessState(p, States.Running);
 			Time += p.getBurstTime();
 			p.setTurnAround(Time - p.getArrivalTime());
 			p.setWaitTime((p.getTurnAround() - p.getBurstTime()) + p.getWaitTime());
@@ -46,10 +34,18 @@ public class SJF extends Algorithm {
 			finalQueue.add(p);
 			p.setState(States.Terminated);
 
-			System.out.println("Process " + p.getProcessID() + " State: " + p.getState() + " Terminated at: "
+			System.out.println("Process " + p.getProcessID() + " State: " + p.getState() + "\nTerminated at: "
 					+ p.getTerminationTime());
 
 			Memory.releaseMemory(p.getMemory());
+			try {
+				Main.Thread2.join(10);
+				readyQueue.sort((p1, p2) -> p1.getBurstTime() - p2.getBurstTime());
+			} catch (InterruptedException e) {
+
+				e.printStackTrace();
+			}
+			System.out.println("--------------------------------------------------------------------------");
 		}
 	}
 

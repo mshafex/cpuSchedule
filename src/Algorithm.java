@@ -1,4 +1,3 @@
-package cpm;
 
 import java.util.ArrayList;
 
@@ -17,7 +16,7 @@ public class Algorithm {
 	}
 	
 	public static void loadResults() {
-		// Print the Grantt chart
+		
 		GranttChart.Table(granttChart);
 
 		double sumWait = 0, sumTurn = 0;

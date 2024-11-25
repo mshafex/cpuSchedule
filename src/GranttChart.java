@@ -1,5 +1,3 @@
-package cpm;
-
 import java.util.ArrayList;
 
 public class GranttChart {

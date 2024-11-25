@@ -1,4 +1,3 @@
-package cpm;
 
 public class Memory {
 
@@ -8,20 +7,19 @@ public class Memory {
         Memory.availableMemory = memorySize;
     }
 
-    // allocateMemory will receive the memory of the process and then will decide
-    // whether there a space to allocate that memory or not if there was a space it
-    // will book it for the process and return true otherwise will return false
     public synchronized static boolean allocateMemory(int memoryRequired) {
         if (memoryRequired <= availableMemory) {
             availableMemory -= memoryRequired;
+            System.out.print("Memory allocated: " + memoryRequired + " MB. Available memory: " + availableMemory + " MB.");
             return true;
         }
+        System.out.println("Not enough memory. Available memory: " + availableMemory + " MB.");
         return false;
     }
 
-    // releaseMemory will receive a process memory and then will empty it space in
-    // MM
     public static void releaseMemory(int memoryReleased) {
         availableMemory += memoryReleased;
+        System.out.println("Memory released: " + memoryReleased + " MB. Available memory: " + availableMemory + " MB.");
+        
     }
 }
