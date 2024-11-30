@@ -1,6 +1,6 @@
 
-
-
+// represent PCB record for proccess
+// contain proccess infromations 
 public class Process {
 
 	private int ProcessID, BurstTime, Memory;
@@ -12,10 +12,15 @@ public class Process {
 		this.ProcessID = processId;
 		this.Memory = memoryRequired;
 		this.BurstTime = burstTime;
-		this.BurstTimer=burstTime;
+		this.BurstTimer = burstTime;
 
+		this.state = States.New;
+	}
 
-		this.state = States.Waiting;
+	public static void changeProcessState(Process process, States newState) {
+		process.setState(newState);
+		System.out.println("Process " + process.getProcessID() + " state changed to " + newState + " at time: "
+				+ Algorithm.getTime());
 	}
 
 	public int getProcessID() {
@@ -33,8 +38,7 @@ public class Process {
 	public void setBurstTime(int burstTime) {
 		BurstTime = burstTime;
 	}
-	
-	
+
 	public int getBurstTimer() {
 		return BurstTimer;
 	}

@@ -10,10 +10,10 @@ public class GranttChart {
         this.name = name;
         this.start = start;
         this.end = end;
-        this.Time = end;
+        Time = end;
     }
 
-     public static void Table(ArrayList<GranttChart> array) {
+    public static void Table(ArrayList<GranttChart> array) {
         for (int i = 0; i < Time + array.size() * 3; i++)
             System.out.print("_");
         System.out.println();

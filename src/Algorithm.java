@@ -2,11 +2,11 @@
 import java.util.ArrayList;
 
 public class Algorithm {
-	
+
 	static ArrayList<Process> finalQueue = new ArrayList<>();
 	static ArrayList<GranttChart> granttChart = new ArrayList<>();
 	protected static int Time = 0;
-	
+
 	public static int getTime() {
 		return Time;
 	}
@@ -14,9 +14,9 @@ public class Algorithm {
 	public static void setTime(int time) {
 		Time = time;
 	}
-	
+
 	public static void loadResults() {
-		
+
 		GranttChart.Table(granttChart);
 
 		double sumWait = 0, sumTurn = 0;
@@ -42,6 +42,5 @@ public class Algorithm {
 
 		System.out.println("AVG Waiting: " + avgWait + "\nAVG TrunAround: " + avgTurn);
 	}
-	
-	
+
 }

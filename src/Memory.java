@@ -10,7 +10,8 @@ public class Memory {
     public synchronized static boolean allocateMemory(int memoryRequired) {
         if (memoryRequired <= availableMemory) {
             availableMemory -= memoryRequired;
-            System.out.print("Memory allocated: " + memoryRequired + " MB. Available memory: " + availableMemory + " MB.");
+            System.out.print(
+                    "Memory allocated: " + memoryRequired + " MB. Available memory: " + availableMemory + " MB.");
             return true;
         }
         System.out.println("Not enough memory. Available memory: " + availableMemory + " MB.");
@@ -20,6 +21,5 @@ public class Memory {
     public static void releaseMemory(int memoryReleased) {
         availableMemory += memoryReleased;
         System.out.println("Memory released: " + memoryReleased + " MB. Available memory: " + availableMemory + " MB.");
-        
     }
 }

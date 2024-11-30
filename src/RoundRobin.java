@@ -4,17 +4,12 @@ public class RoundRobin extends Algorithm {
 
 	public RoundRobin(ArrayList<Process> readyQueue) {
 
-		
-
 		do {
 
 			if (!readyQueue.isEmpty())
 				roundrobin(readyQueue);
 
-			
 		} while (!CPUScheduler.readyQueue.isEmpty() || !JobScheduler.jobQueue.isEmpty());
-
-		
 
 		loadResults();
 
@@ -26,8 +21,8 @@ public class RoundRobin extends Algorithm {
 
 		while (!readyQueue.isEmpty()) {
 			Process p = readyQueue.remove(0);
-			 CPUScheduler.changeProcessState(p, States.Running);
-			
+			Process.changeProcessState(p, States.Running);
+
 			if (p.getBurstTimer() > quantum) {
 
 				Time += quantum;
@@ -51,18 +46,18 @@ public class RoundRobin extends Algorithm {
 				p.setTerminationTime(Time);
 				p.setState(States.Terminated);
 
-				
 				GranttChart cG = new GranttChart("P" + p.getProcessID(), Time - p.getBurstTimer(), Time);
-				System.out.println("Process " + p.getProcessID() + " State: " + p.getState() + "\nTerminated at Time: "
-						+ p.getTerminationTime());
+
 				granttChart.add(cG);
 
-				finalQueue.add(p);
+				System.out.println("Process " + p.getProcessID() + " State: " + p.getState() + "\nTerminated at Time: "
+						+ p.getTerminationTime());
 
-				
+				finalQueue.add(p);
 				Memory.releaseMemory(p.getMemory());
+
 				try {
-					Main.Thread2.join(10);
+					Main.cpuSchedulerThread.join(10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
